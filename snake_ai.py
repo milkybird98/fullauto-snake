@@ -7,17 +7,17 @@ def shift_array(arr, size):
         arr[i] = arr[i-1]
 
 class snake_game_view:
-    HEIGHT = 10
+    HEIGTH = 10
     WIDTH = 20
-    FIELD_SIZE = HEIGHT * WIDTH
+    FIELD_SIZE = HEIGTH * WIDTH
     win = None
 
-    def __init__(self,HEIGHT,WIDTH):
-        self.HEIGHT=HEIGHT
+    def __init__(self,HEIGTH,WIDTH):
+        self.HEIGTH=HEIGTH
         self.WIDTH=WIDTH
-        self.FIELD_SIZE=HEIGHT*WIDTH
+        self.FIELD_SIZE=HEIGTH*WIDTH
         curses.initscr()
-        self.win = curses.newwin(HEIGHT+2, WIDTH+2, 0, 0)
+        self.win = curses.newwin(HEIGTH+2, WIDTH+2, 0, 0)
         self.win.keypad(1)
         curses.noecho()
         curses.curs_set(0)
@@ -28,9 +28,9 @@ class snake_game_view:
         self.win.timeout(time)
 
     def draw_menu(self):
-        self.win.addstr(self.HEIGHT//2-1, 2, "UP: AI")
-        self.win.addstr(self.HEIGHT//2, 2, "DOWN: Manuly")
-        self.win.addstr(self.HEIGHT//2+1, 2, "Press to choose")
+        self.win.addstr(self.HEIGTH//2-1, 2, "UP: AI")
+        self.win.addstr(self.HEIGTH//2, 2, "DOWN: Manuly")
+        self.win.addstr(self.HEIGTH//2+1, 2, "Press to choose")
 
     def close(self):
         curses.endwin()
@@ -65,14 +65,14 @@ class snake_game_view:
 ##################################################################
 
 class snake_game_model:
-    HEIGHT = 1
-    WIDTH = 1
-    FIELD_SIZE = HEIGHT * WIDTH
+    HEIGTH = 15
+    WIDTH = 30
+    FIELD_SIZE = HEIGTH * WIDTH
 
     HEAD = 0
 
     FOOD = 0
-    UNDEFINED = (HEIGHT + 1) * (WIDTH + 1)
+    UNDEFINED = (HEIGTH + 1) * (WIDTH + 1)
     SNAKE = 2 * UNDEFINED
 
     LEFT = -1
@@ -82,17 +82,17 @@ class snake_game_model:
 
     mov = []
 
-    ERR = -1111
+    ERR = -999
 
     board = []
     snake = []
     snake_size = 0
     food = 0
     
-    def __init__(self,HEIGHT=10,WIDTH=20):
-        self.HEIGHT=HEIGHT
+    def __init__(self,HEIGTH=15,WIDTH=30):
+        self.HEIGTH=HEIGTH
         self.WIDTH=WIDTH
-        self.FIELD_SIZE=HEIGHT*WIDTH    
+        self.FIELD_SIZE=HEIGTH*WIDTH    
 
         self.board = [0] * self.FIELD_SIZE
         self.snake = [0] * (self.FIELD_SIZE+1)
@@ -100,7 +100,7 @@ class snake_game_model:
         self.snake_size = 1 
         self.food = 3 * WIDTH + 3
 
-        self.UNDEFINED = (HEIGHT + 1) * (WIDTH + 1)
+        self.UNDEFINED = (HEIGTH + 1) * (WIDTH + 1)
         self.SNAKE = self.UNDEFINED + 1
         
         self.UP = -WIDTH
@@ -129,7 +129,7 @@ class snake_game_model:
         cell_free = False
         while not cell_free:
             w = randint(0, self.WIDTH-1)
-            h = randint(0, self.HEIGHT-1)
+            h = randint(0, self.HEIGTH-1)
             self.food = h * self.WIDTH + w
             cell_free = self.is_cell_free(self.food)
 
@@ -375,16 +375,19 @@ def key_move(game,view,key):
     return next_move
 
 WIDTH = 15
-HEIGHT = 30
+HEIGTH = 30
+
+AI_STEP_DELAY = 0
+MAN_STEP_DELAY = 500
 
 AI_MODE = 1
 MANULY_MODE = 2
 
 Mode = None
 
-view = snake_game_view(WIDTH,HEIGHT)
-game = snake_game_model(WIDTH,HEIGHT)
-ai = snake_game_ai(WIDTH,HEIGHT)
+view = snake_game_view(WIDTH,HEIGTH)
+game = snake_game_model(WIDTH,HEIGTH)
+ai = snake_game_ai(WIDTH,HEIGTH)
 
 view.draw_info('Choose Mode')
 view.draw_menu()
@@ -394,11 +397,11 @@ while True:
     event = view.get_key_input()
     if event == KEY_UP:
         Mode = AI_MODE
-        view.draw_timeout(0)
+        view.draw_timeout(AI_STEP_DELAY)
         break
     elif event == KEY_DOWN:
         Mode = MANULY_MODE
-        view.draw_timeout(500)
+        view.draw_timeout(MAN_STEP_DELAY)
         break
 view.win.erase()
 
