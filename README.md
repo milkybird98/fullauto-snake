@@ -8,7 +8,7 @@ git clone https://github.com/milkybird98/FULLAUTO-Snake
 cd FULLAUTO-Snake
 python snake_ai.py
 ```
-Once in the menu, press UP or DOWN to choose ai mode or manuly mode ( just like a normal snake game ):
+Once in the menu, press UP or DOWN to choose ai mode or manuly mode ( just like a normal snake game )
 + Use UP, DOWN, LEFT and RIGHT four arrow keys to contorl your snake in manuly mode.
 + Just watch the twisting snake in your screen in ai mode.
 
