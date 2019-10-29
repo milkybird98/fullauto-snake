@@ -19,7 +19,7 @@ In the game, curses is used to generate the game CUI in you shell.
 ```
 pip install windows-curses
 ```
-### Linux
+### Linux/MacOS
 ```
 pip install curses
 ```
