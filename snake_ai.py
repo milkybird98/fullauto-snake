@@ -6,6 +6,12 @@ def shift_array(arr, size):
     for i in range(size, 0, -1):
         arr[i] = arr[i-1]
 
+##################################################################
+#
+# View Model # for snake game render and view
+#
+##################################################################
+
 class snake_game_view:
     HEIGTH = 10
     WIDTH = 20
@@ -153,9 +159,11 @@ class snake_game_model:
             self.board[self.snake[self.snake_size]] = self.UNDEFINED
             return None
 
-
-
-
+##################################################################
+#
+# AI Model # for snake game inside AI implementation
+#
+##################################################################
 
 class snake_game_ai(snake_game_model):
     virtual_board = []
@@ -352,11 +360,11 @@ class snake_game_ai(snake_game_model):
 
         return next_move
 
-########################################################
-# 
-# Main Controler Part
+##################################################################
 #
-########################################################
+# Controler Layer # for snake game input data choose
+#
+##################################################################
 
 def ai_move(game,view,ai):
     ai.update_data(game.board,game.food,game.snake,game.snake_size)
@@ -374,8 +382,8 @@ def key_move(game,view,key):
         next_move = game.get_move_length(3)
     return next_move
 
-WIDTH = 15
-HEIGTH = 30
+WIDTH = 40
+HEIGTH = 40
 
 AI_STEP_DELAY = 0
 MAN_STEP_DELAY = 500
@@ -403,6 +411,10 @@ while True:
         Mode = MANULY_MODE
         view.draw_timeout(MAN_STEP_DELAY)
         break
+    elif event == 27:
+        view.close()
+        exit()
+
 view.win.erase()
 
 key = KEY_RIGHT
@@ -429,7 +441,8 @@ while True:
         break        
 
     res = game.make_move(next_move)
-    view.draw_snake(game.snake,game.snake_size)
+    if res != 'die':
+        view.draw_snake(game.snake,game.snake_size)
 
     if res == 'die':
         view.draw_info('game over, press ESC to exit')
