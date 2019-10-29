@@ -382,8 +382,8 @@ def key_move(game,view,key):
         next_move = game.get_move_length(3)
     return next_move
 
-WIDTH = 40
-HEIGTH = 40
+WIDTH = 15
+HEIGTH = 30
 
 AI_STEP_DELAY = 0
 MAN_STEP_DELAY = 500
